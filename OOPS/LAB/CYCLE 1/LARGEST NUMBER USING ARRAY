@@ -5,10 +5,10 @@ class Largest
   public static void main(String args[]) 
   {
     Scanner sc = new Scanner(System.in);
-    System.out.println("Enter the number of elements:");
+    System.out.println("ENTER THE NUMBER OF ELEMENTS: ");
     int n = sc.nextInt();
     int arr[] = new int[n];
-    System.out.println("Enter the elements:");
+    System.out.println("ENTER THE ELEMENTS: ");
     for (int i = 0; i < n; i++) 
     {
       arr[i] = sc.nextInt();
@@ -22,6 +22,6 @@ class Largest
         }
       }
         
-     System.out.println("The largest element is: " + largest);
+     System.out.println("THE LARGEST ELEMENT IS: " + largest);
     }
 }
