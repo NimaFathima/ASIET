@@ -19,6 +19,7 @@ class palindrome
 	{
 		System.out.println("THE GIVEN STRING IS NOT A PALINDROME");		
 	}
+	s.close();
 	
  }
 }
