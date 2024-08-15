@@ -1,0 +1,45 @@
+import java.util.*;
+
+class matrix_multiply
+{
+  public static void main(String args[])
+ {	int a[][]=new int[50][50];
+	int b[][]=new int[50][50];
+	Scanner s= new Scanner(System.in);
+	System.out.println("ENTER THE NUMBER OF ROWS AND COLOUMNS: ");
+  	int r = s.nextInt();
+  	int c= s.nextInt();
+	System.out.println("ENTER THE ELEMENTS OF MATRIX 1 : ");
+  	for(int i=0;i<r;i++)
+  	{
+   		for(int j=0;j<c;j++)
+			a[i][j]=s.nextInt();
+   	}
+
+  	System.out.println("ENTER THE ELEMENTS OF MATRIX 2 : ");
+  	for(int i=0;i<r;i++)
+  	{
+   		for(int j=0;j<c;j++)
+			b[i][j]=s.nextInt();
+   	}
+
+	int n[][]=new int[50][50];
+	for(int i=0;i<r;i++)
+	{
+  		for(int j=0;j<c;j++)
+		{	for(int k=0;k<r;k++)
+				n[i][j] += a[i][k]*b[k][j];
+
+		}
+	}
+	System.out.println("THE PRODUCT MATRIX : ");
+  	for(int i=0;i<r;i++)
+  	{
+   		for(int j=0;j<c;j++)
+			System.out.println(n[i][j]+ " ");
+
+   	}
+
+
+ }
+}
