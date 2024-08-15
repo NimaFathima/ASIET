@@ -15,14 +15,14 @@ class matrix_multiply
    		for(int j=0;j<c;j++)
 			a[i][j]=s.nextInt();
    	}
- 	
+
   	System.out.println("ENTER THE ELEMENTS OF MATRIX 2 : ");
   	for(int i=0;i<r;i++)
   	{
    		for(int j=0;j<c;j++)
 			b[i][j]=s.nextInt();
    	}
-  	
+
 	int n[][]=new int[50][50];
 	for(int i=0;i<r;i++)
 	{
@@ -34,12 +34,12 @@ class matrix_multiply
 	}
 	System.out.println("THE PRODUCT MATRIX : ");
   	for(int i=0;i<r;i++)
-  	{
+  	{	
    		for(int j=0;j<c;j++)
-			System.out.println(n[i][j]);
-			
+		{	System.out.print(n[i][j]);
+			System.out.print( "\t" );
+		}
+        System.out.print( "\n" );
    	}
-
-	
- }
+  }
 }
