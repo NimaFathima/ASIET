@@ -23,12 +23,12 @@ class matrix_multiply
 			b[i][j]=s.nextInt();
    	}
 
-	int n[][]=new int[50][50];
+	int s[][]=new int[50][50];
 	for(int i=0;i<r;i++)
 	{
   		for(int j=0;j<c;j++)
 		{	for(int k=0;k<r;k++)
-				n[i][j] += a[i][k]*b[k][j];
+				s[i][j] += a[i][k]*b[k][j];
 
 		}
 	}
@@ -36,7 +36,7 @@ class matrix_multiply
   	for(int i=0;i<r;i++)
   	{
    		for(int j=0;j<c;j++)
-			System.out.println(n[i][j]+ " ");
+			System.out.println(s[i][j]+ " ");
 
    	}
 
