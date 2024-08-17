@@ -1,0 +1,28 @@
+#include <stdio.h>
+
+void main() {
+    int i, n, arr[100],s,flag=0;
+    
+    printf("ENTER THE NUMBER OF ELEMENTS IN THE ARRAY: ");
+    scanf("%d", &n);
+    
+    printf("ENTER THE ELEMENTS OF THE ARRAY: ");
+    for(i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    
+    printf("ENTER THE ELEMENT TO BE SEARCHED: ");
+    scanf("%d", &s);
+    
+    for(i =0;i<n;i++) {
+        if(arr[i] == s)
+        {
+            printf("ELEMENT FOUND AT %d\n", i+1);
+            flag=1;
+            break;
+        }
+    }
+    if(flag=0) {
+        printf("ELEMENT NOT FOUND\n");
+    }
+}
