@@ -18,7 +18,7 @@ int readpoly(struct poly p[100])
     scanf("%d", &t1);
 
     printf("Enter the coefficient & exponent in descending order \n ");
-    for (i = 1; i <= t1; i++) 
+    for (i = 0; i < t1; i++) 
     {
         printf("Enter the Coefficient(%d): ",i);
         scanf("%d", &p[i].coeff);
