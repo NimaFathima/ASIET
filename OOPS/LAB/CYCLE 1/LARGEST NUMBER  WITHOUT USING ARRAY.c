@@ -5,7 +5,7 @@ class Largest
     	public static void main(String args[])
          {
         	 Scanner s = new Scanner(System.in);
-           int n,largest=0;
+          int n,largest=0;
         	 System.out.println("ENTER THE NUMBER OF ELEMENTS: ");
         	 n = s.nextInt();
         	 System.out.println("ENTER THE ELEMENTS:");
