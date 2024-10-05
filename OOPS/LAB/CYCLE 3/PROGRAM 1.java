@@ -5,8 +5,15 @@ class Employee{
 	int phone;
 	String address;
 	int salary;
-	int printSalary(){
+	void printSalary(){
 		System.out.println("SALARY OF THE EMPLOYEE"+salary);	
+	}
+	Employee(String name,int age,int phone,String address,int salary){
+		this.name = name;
+		this.age= age;
+	    this.phone= phone;
+		this.address=address;
+		this.salary= salary;
 	}
 }
 
@@ -31,6 +38,7 @@ class main{
  	String address =s.nextLine();
  	System.out.println("ENTER THE SALARY : ");
  	int salary  =s.nextInt();
+ 	Employee e=new Employee(name,age,phone,address,salary);
  	Officer o= new Officer();
  	o.printSalary();
  	Manager m=new Manager();
