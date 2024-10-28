@@ -1,12 +1,19 @@
-class Test{
-	protected void finalize(){
-		System.out.println("object is garbage collected");
-	}
-	public static void main(String args[]){
-		Test s1 =new Test();
-		Test s2 =new Test();
-		s1=null;
-		s2=null;
-		System.gc();
-	}
+/NIMA FATHIMA - 46
+public class Demo {
+    static class Object {
+        public Object() {
+            System.out.println("Object created");
+        }
+        protected void finalize() throws Throwable {
+            System.out.println("Object is being garbage collected");
+            super.finalize();
+        }
+    }
+
+    public static void main(String[] args) {
+        Object obj = new Object();
+        obj = null;
+        System.out.println("Requesting garbage collection");
+        System.gc();
+    }
 }
