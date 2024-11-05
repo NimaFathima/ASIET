@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 void insertionSort(int arr[], int n)
 {
     for (int i = 1; i < n; ++i) {
@@ -22,8 +23,15 @@ void printArray(int arr[], int n)
 
 int main()
 {
-    int arr[] = { 12, 11, 13, 5, 6 };
-    int n = sizeof(arr) / sizeof(arr[0]);
+    int n;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter the elements:\n");
+    for (int i = 0; i < n; ++i) {
+        scanf("%d", &arr[i]);
+    }
 
     insertionSort(arr, n);
     printArray(arr, n);
