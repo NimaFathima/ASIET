@@ -17,7 +17,7 @@ int prec(char c){
 char associativity(char c) {
 	if (c == '^')
 		return 'R';
-		return 'L';
+	return 'L';
 }
 void infixToPostfix(char s[]) {
 	char result[1000];
