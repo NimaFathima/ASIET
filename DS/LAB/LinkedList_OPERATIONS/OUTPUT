@@ -1,0 +1,319 @@
+Enter the number of nodes: 3
+
+Enter number to be inserted : 5
+
+Enter number to be inserted : 6
+
+Enter number to be inserted : 7
+
+The list is created
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+1
+Data = 5
+Data = 6
+Data = 7
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+2
+
+Enter number to be inserted : 4
+
+1 To see list
+
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+3
+
+Enter number to be inserted : 8
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+4
+
+Enter position and data :5 9
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+1
+Data = 4
+Data = 5
+Data = 6
+Data = 7
+Data = 9
+Data = 8
+
+1 To see list
+2 For insertion at starting
+
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+5
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+6
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+7
+
+Enter index : 4
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+1
+Data = 5
+Data = 6
+Data = 7
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+8
+
+Maximum number is : 7
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+9
+
+Mean is 6.000000
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+10
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+1
+Data = 5
+Data = 6
+Data = 7
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+11
+Reversed linked list is : 7 6 5
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+1
+Data = 7
+Data = 6
+Data = 5
+
+1 To see list
+2 For insertion at starting
+3 For insertion at end
+4 For insertion at any position
+5 For deletion of first element
+
+6 For deletion of last element
+7 For deletion of element at any position
+8 To find maximum among the elements
+9 To find mean of the elements
+10 To sort element
+11 To reverse the linked list
+12 Search an element in linked list
+13 To exit
+
+Enter Choice :
+12
+
+Enter the element you want to search: 5
+Yes, 5 is present in the linked list.
