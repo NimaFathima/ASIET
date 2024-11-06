@@ -1,10 +1,10 @@
-import java.util.Random;
+import java.util.*;
 
 class NumberGenerator extends Thread {
     public void run() {
         Random random = new Random();
         while (true) {
-            int num = random.nextInt(100); // Generate a random number between 0 and 99
+            int num = random.nextInt(100);
             System.out.println("Generated Number: " + num);
             if (num % 2 == 0) {
                 new Square(num).start();
@@ -12,7 +12,7 @@ class NumberGenerator extends Thread {
                 new Cube(num).start();
             }
             try {
-                Thread.sleep(1000); // Wait for 1 second
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 System.out.println("Thread interrupted: " + e.getMessage());
             }
@@ -51,3 +51,14 @@ public class MultiThreadingDemo {
         new NumberGenerator().start();
     }
 }
+
+/*
+OUTPUT:
+Square of 28 is: 784
+Generated Number: 73
+Cube of 73 is: 389017
+Generated Number: 65
+Cube of 65 is: 274625
+Generated Number: 46
+Square of 46 is: 2116
+*/
