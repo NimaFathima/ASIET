@@ -21,7 +21,7 @@ class NumberGenerator extends Thread {
 }
 
 class Square extends Thread {
-    private int number;
+    int number;
 
     Square(int number) {
         this.number = number;
@@ -34,7 +34,7 @@ class Square extends Thread {
 }
 
 class Cube extends Thread {
-    private int number;
+    int number;
 
     Cube(int number) {
         this.number = number;
