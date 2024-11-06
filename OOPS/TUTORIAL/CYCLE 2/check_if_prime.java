@@ -1,14 +1,14 @@
-import java.util.Scanner;
+import java.util.*;
 
 public class PrimeNumberCheck {
 
     public static boolean isPrime(int num) {
         if (num <= 1) {
-            return false; // 0 and 1 are not prime
+            return false; 
         }
         for (int i = 2; i <= Math.sqrt(num); i++) {
             if (num % i == 0) {
-                return false; // Divisible by i, not prime
+                return false; 
             }
         }
         return true; // Prime number
