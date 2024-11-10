@@ -1,6 +1,5 @@
 //editted
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
 
 #define SIZE 20
@@ -19,117 +18,77 @@ int hashCode(int key) {
 }
 
 struct DataItem *search(int key) {
-   //get the hash 
    int hashIndex = hashCode(key);  
-	
-   //move in array until an empty 
    while(hashArray[hashIndex] != NULL) {
-	
-      if(hashArray[hashIndex]->key == key)
-         return hashArray[hashIndex]; 
-			
-      //go to next cell
+      if(hashArray[hashIndex]->key == key) {
+         printf("Element found: %d\n", hashArray[hashIndex]->data);
+         return hashArray[hashIndex];
+      }
       ++hashIndex;
-		
-      //wrap around the table
       hashIndex %= SIZE;
-   }        
-	
+   }
+   printf("Element not found\n");
    return NULL;        
 }
 
-void insert(int key,int data) {
-
-   struct DataItem *item = (struct DataItem*) malloc(sizeof(struct DataItem));
-   item->data = data;  
-   item->key = key;
-
-   //get the hash 
-   int hashIndex = hashCode(key);
-
-   //move in array until an empty or deleted cell
-   while(hashArray[hashIndex] != NULL && hashArray[hashIndex]->key != -1) {
-      //go to next cell
-      ++hashIndex;
-		
-      //wrap around the table
-      hashIndex %= SIZE;
-   }
-	
-   hashArray[hashIndex] = item;
+void insert(int key, int data) {
+    struct DataItem *item = (struct DataItem*) malloc(sizeof(struct DataItem));
+    item->data = data;  
+    item->key = key;
+    int hashIndex = hashCode(key);
+    while(hashArray[hashIndex] != NULL && hashArray[hashIndex]->key != -1) {
+        ++hashIndex;
+        hashIndex %= SIZE;
+    }
+    hashArray[hashIndex] = item;
+    printf("Inserted (%d, %d)\n", key, data);
 }
 
 struct DataItem* delete(struct DataItem* item) {
-   int key = item->key;
-
-   //get the hash 
-   int hashIndex = hashCode(key);
-
-   //move in array until an empty
-   while(hashArray[hashIndex] != NULL) {
-	
-      if(hashArray[hashIndex]->key == key) {
-         struct DataItem* temp = hashArray[hashIndex]; 
-			
-         //assign a dummy item at deleted position
-         hashArray[hashIndex] = dummyItem; 
-         return temp;
-      }
-		
-      //go to next cell
-      ++hashIndex;
-		
-      //wrap around the table
-      hashIndex %= SIZE;
-   }      
-	
-   return NULL;        
+    int key = item->key;
+    int hashIndex = hashCode(key);
+    while(hashArray[hashIndex] != NULL) {
+        if(hashArray[hashIndex]->key == key) {
+            struct DataItem* temp = hashArray[hashIndex]; 
+            hashArray[hashIndex] = dummyItem; 
+            printf("Deleted key: %d, value: %d\n", temp->key, temp->data);
+            return temp;
+        }
+        ++hashIndex;
+        hashIndex %= SIZE;
+    }
+    printf("Element not found for deletion\n");
+    return NULL;        
 }
 
 void display() {
-   int i = 0;
-	
-   for(i = 0; i<SIZE; i++) {
-	
-      if(hashArray[i] != NULL)
-         printf(" (%d,%d)",hashArray[i]->key,hashArray[i]->data);
-      else
-         printf(" ~~ ");
-   }
-	
-   printf("\n");
+    for(int i = 0; i < SIZE; i++) {
+        if(hashArray[i] != NULL)
+            printf(" (%d,%d)", hashArray[i]->key, hashArray[i]->data);
+        else
+            printf(" ~~ ");
+    }
+    printf("\n");
 }
 
 int main() {
-   dummyItem = (struct DataItem*) malloc(sizeof(struct DataItem));
-   dummyItem->data = -1;  
-   dummyItem->key = -1; 
+    dummyItem = (struct DataItem*) malloc(sizeof(struct DataItem));
+    dummyItem->data = -1;  
+    dummyItem->key = -1; 
 
-   insert(1, 20);
-   insert(2, 70);
-   insert(42, 80);
-   insert(4, 25);
-   insert(12, 44);
-   insert(14, 32);
-   insert(17, 11);
-   insert(13, 78);
-   insert(37, 97);
+    insert(1, 20);
+    insert(2, 70);
+    insert(42, 80);
+    insert(4, 25);
+    insert(12, 44);
+    insert(14, 32);
+    insert(17, 11);
+    insert(13, 78);
+    insert(37, 97);
 
-   display();
-   item = search(37);
+    display();
 
-   if(item != NULL) {
-      printf("Element found: %d\n", item->data);
-   } else {
-      printf("Element not found\n");
-   }
-
-   delete(item);
-   item = search(37);
-
-   if(item != NULL) {
-      printf("Element found: %d\n", item->data);
-   } else {
-      printf("Element not found\n");
-   }
+    item = search(37);
+    delete(item);
+    search(37);
 }
