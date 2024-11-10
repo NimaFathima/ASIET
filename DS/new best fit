@@ -1,0 +1,51 @@
+#include <stdio.h>
+
+void bestFit(int blockSizes[], int blocks, int processSizes[], int process) {
+    int allocated[process]; 
+    int occupied[blocks];
+
+    for (int i = 0; i < process; i++) { 
+        allocated[i] = -1; 
+    } 
+
+    for (int i = 0; i < blocks; i++) { 
+        occupied[i] = 0; 
+    }
+
+    for (int i = 0; i < process; i++) { 
+        int bestIndex = -1; 
+        for (int j = 0; j < blocks; j++) {
+            if (blockSizes[j] >= processSizes[i] && !occupied[j]) {
+                if (bestIndex == -1) 
+                    bestIndex = j; 
+                else if (blockSizes[j] < blockSizes[bestIndex]) 
+                    bestIndex = j; 
+            }
+        }
+
+        if (bestIndex != -1) { 
+            allocated[i] = bestIndex; 
+            occupied[bestIndex] = 1; 
+        } 
+    } 
+
+    printf("\nProcess No.\tProcess Size\tBlock No.\n");
+    for (int i = 0; i < process; i++) { 
+        printf("%d\t\t%d\t\t", i + 1, processSizes[i]);
+        if (allocated[i] != -1) 
+            printf("%d\n", allocated[i] + 1); 
+        else 
+            printf("Not Allocated\n"); 
+    }
+}
+
+int main() { 
+    int blockSizes[] = {100, 50, 30, 120, 35};
+    int processSizes[] = {40, 10, 30, 60};
+    int blocks = sizeof(blockSizes) / sizeof(blockSizes[0]);
+    int process = sizeof(processSizes) / sizeof(processSizes[0]);
+
+    bestFit(blockSizes, blocks, processSizes, process);
+
+    return 0; 
+}
