@@ -1,5 +1,3 @@
-// NIMA FATHIMA – 46
-#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -58,7 +56,7 @@ void dequeue(Queue* q) {
 int getFront(Queue* q) {
     if (isEmpty(q)) {
         printf("Queue is empty\n");
-        return INT_MIN;
+        return -1;
     }
     return q->front->data;
 }
@@ -66,31 +64,45 @@ int getFront(Queue* q) {
 int getRear(Queue* q) {
     if (isEmpty(q)) {
         printf("Queue is empty\n");
-        return INT_MIN;
+        return -1;
     }
     return q->rear->data;
 }
 
 int main() {
     Queue* q = createQueue();
-    
     enqueue(q, 10);
     enqueue(q, 20);
-    
-    printf("Queue Front: %d\n", getFront(q));
-    printf("Queue Rear: %d\n", getRear(q));
-    
+
+    int front = getFront(q);
+    int rear = getRear(q);
+    if (front != -1) {
+        printf("Queue Front: %d\n", front);
+    }
+
+    if (rear != -1) {
+        printf("Queue Rear: %d\n", rear);
+    }
+
     dequeue(q);
     dequeue(q);
-    
+
     enqueue(q, 30);
     enqueue(q, 40);
     enqueue(q, 50);
-    
+
     dequeue(q);
-    
-    printf("Queue Front: %d\n", getFront(q));
-    printf("Queue Rear: %d\n", getRear(q));
-    
+
+    front = getFront(q);
+    rear = getRear(q);
+
+    if (front != -1) {
+        printf("Queue Front: %d\n", front);
+    }
+
+    if (rear != -1) {
+        printf("Queue Rear: %d\n", rear);
+    }
+
     return 0;
 }
