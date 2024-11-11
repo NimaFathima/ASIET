@@ -18,13 +18,13 @@ void bfs(int adj[MAX][MAX], int V, int s) {
     // Iterate over the queue
     while (front < rear) {
         // Dequeue a vertex and print it
-        int curr = q[front++];
-        printf("%d ", curr);
+        int c = q[front++];
+        printf("%d ", c);
 
         // Get all adjacent vertices of the dequeued vertex
         // If an adjacent has not been visited, mark it visited and enqueue it
         for (int i = 0; i < V; i++) {
-            if (adj[curr][i] == 1 && !visited[i]) {
+            if (adj[c][i] == 1 && visited[i]==0 ) {
                 visited[i] = 1;  // Mark as "true"
                 q[rear++] = i;
             }
