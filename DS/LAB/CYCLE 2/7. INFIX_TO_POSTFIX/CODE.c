@@ -1,7 +1,6 @@
 
 //NIMA FATHIMA - 46
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 int prec(char c){
 
