@@ -20,7 +20,7 @@ void addEdge(int adj[MAX][MAX], int u, int v) {
     adj[v][u] = 1;  // Undirected graph
 }
 
-int main() {
+void main() {
     // Number of vertices in the graph
     int V = 6;
 
@@ -39,10 +39,8 @@ int main() {
     // Perform DFS traversal from all vertices to ensure all nodes are covered
     printf("DFS traversal of the graph:\n");
     for (int i = 0; i < V; i++) {
-        if (!visited[i]) {
+        if (visited[i]==0) {
             dfs(adj, V, i, visited);
         }
     }
-
-    return 0;
 }
