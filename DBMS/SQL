@@ -1,0 +1,182 @@
+Date: 4th, January 2025.
+1. PRIMARY KEY
+Introduction:
+A PRIMARY KEY uniquely identifies each record in a table. It ensures no duplicate values
+and does not allow NULL.
+Syntax:
+CREATE TABLE TableName (ColumnName DataType PRIMARY KEY );
+
+Example:
+CREATE TABLE Students ( StudentID INT PRIMARY KEY, Name VARCHAR(50), Age
+INT );
+
+Exercises:
+1. Create a table Employees with EmployeeID as the primary key and columns
+Name and Department.
+ANS:
+mysql> create table Employees(EmployeeID INT PRIMARY KEY,Name varchar(20),Department varchar(5));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> desc Employee;
+ERROR 1146 (42S02): Table 'NIMA.Employee' doesn't exist
+mysql> desc Employees;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| EmployeeID | int         | NO   | PRI | NULL    |       |
+| Name       | varchar(20) | YES  |     | NULL    |       |
+| Department | varchar(5)  | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+2. Insert duplicate values for EmployeeID in the Employees table and observe the
+error.
+ANS:
+mysql> insert into Employees (EmployeeID) values(1001),(1002);
+Query OK, 2 rows affected (0.03 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> insert into Employees (EmployeeID) values(1001);
+ERROR 1062 (23000): Duplicate entry '1001' for key 'Employees.PRIMARY'
+
+2. FOREIGN KEY
+Introduction:
+A FOREIGN KEY links two tables, ensuring referential integrity. It references the
+PRIMARY KEY in another table.
+Syntax:
+CREATE TABLE TableName ( ColumnName DataType, FOREIGN KEY
+(ColumnName) REFERENCES OtherTable(PrimaryKeyColumn) );
+Example:
+CREATE TABLE Orders ( OrderID INT PRIMARY KEY, CustomerID INT, FOREIGN
+KEY (CustomerID) REFERENCES Customers(CustomerID) );
+
+Exercises:
+1. Create two tables, Departments and Employees. Add a foreign key in
+Employees referencing Departments.
+ANS:
+mysql> create table Departments(Emp_ID int primary key,Department_Name varchar(10));
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table Employees(Employee_ID int ,Name varchar(20),foreign key(Employee_ID) REFERENCES
+ Departments(Emp_ID));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> DESC Employees;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| Employee_ID | int         | YES  | MUL | NULL    |       |
+| Name        | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+mysql> DESC Departments;
++-----------------+-------------+------+-----+---------+-------+
+| Field           | Type        | Null | Key | Default | Extra |
++-----------------+-------------+------+-----+---------+-------+
+| Emp_ID          | int         | NO   | PRI | NULL    |       |
+| Department_Name | varchar(10) | YES  |     | NULL    |       |
++-----------------+-------------+------+-----+---------+-------+
+2 rows in set (0.01 sec)
+
+2. Try to insert a record in Employees with a DepartmentID that doesn’t exist in
+Departments.
+ANS:
+
+3. UNIQUE
+Introduction:
+A UNIQUE constraint ensures all values in a column are different. It allows a single NULL
+value.
+Syntax:
+CREATE TABLE TableName ( ColumnName DataType UNIQUE );
+
+Example:
+
+CREATE TABLE Users ( UserID INT PRIMARY KEY, Email VARCHAR(100) UNIQUE );
+Exercises:
+1. Create a Library table with a BookTitle column having a unique constraint.
+ANS:
+
+2. Try to insert duplicate values in the BookTitle column and observe the error.
+ANS:
+
+4. NOT NULL
+Introduction:
+The NOT NULL constraint ensures a column cannot have NULL values.
+Syntax:
+CREATE TABLE TableName ( ColumnName DataType NOT NULL );
+
+Example:
+CREATE TABLE Products ( ProductID INT PRIMARY KEY, ProductName
+VARCHAR(50) NOT NULL );
+Exercises:
+1. Create a Courses table with CourseName as a NOT NULL column.
+ANS:
+
+2. Try inserting a record without specifying a value for CourseName.
+ANS:
+
+5. CHECK
+Introduction:
+The CHECK constraint ensures all column values satisfy a specific condition.
+Syntax:
+CREATE TABLE TableName ( ColumnName DataType CHECK (Condition) );
+
+Example:
+CREATE TABLE Employees ( EmployeeID INT PRIMARY KEY, Age INT CHECK (Age
+>= 18) );
+Exercises:
+1. Create a Students table with an Age column that must be at least 5.
+ANS:
+
+2. Try inserting a record with Age less than 5 and observe the error.
+ANS:
+
+6. DEFAULT
+Introduction:
+The DEFAULT constraint assigns a default value to a column if no value is provided
+during insertion.
+Syntax:
+CREATE TABLE TableName ( ColumnName DataType DEFAULT DefaultValue );
+Example:
+CREATE TABLE Accounts ( AccountID INT PRIMARY KEY, Balance DECIMAL(10, 2)
+DEFAULT 0.00 );
+Exercises:
+1. Create a Users table where the Status column has a default value of Active.
+ANS:
+
+2. Insert a record without specifying Status and check the default value.
+ANS:
+_____________________________________________________________
+7. Exercises for Practice
+1. Combine constraints: Create a Flights table where FlightID is a primary
+key, Source and Destination are NOT NULL, and Seats must be greater
+than 0.
+ANS:
+
+2. Create a Books table with BookID as the primary key, Title as unique, and
+Price that must be greater than 0.
+ANS:
+
+Practise Session:
+
+0. Create a above tables with the speci3ied constraints and do the following
+commands.
+ALTER Statements
+1. Add a ContactNumber column to the Passengers table.
+
+2. Add a DepartureTime column to the Trains table with a default time.
+3. Add a unique constraint to the StationName column in the Stations table.
+MODIFY Statements
+4. Modify the ContactNumber column in Passengers to make it NOT NULL.
+5. Change the Status column in Tickets to have a default value of Confirmed.
+DROP Statements
+6. Drop the DepartureTime column from the Trains table.
+7. Drop the unique constraint on StationName in the Stations table.
+INSERT Statements
+8. Insert a record into the Passengers table.
+9. Insert a record into the Trains table.
+10.Insert a ticket into the Tickets table.
+DELETE and UPDATE
+11. Delete a passenger from the Passengers table.
+12. Update the TotalSeats in the Trains table to increase by 10.
