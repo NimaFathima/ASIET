@@ -1,0 +1,24 @@
+#include <sys/types.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/wait.h>
+
+void main() {
+    int status, pid, child_pid;
+    pid = fork();
+    
+    if (pid == -1) {
+        printf("Child Process Creation Failed!");
+        exit(0);
+    } 
+    else if (pid == 0) {
+        printf("Inside Child Process with process ID: %d \n", getpid());
+        execlp("/bin/date", "date", NULL);
+        exit(0); // Added missing closing brace }
+    }
+    else {
+        child_pid = wait(&status);
+        printf("\nInside the parent process with ID: %d \n", getpid());
+        printf("Child Process Created Successfully\n");
+    }
+}
