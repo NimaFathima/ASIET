@@ -14,7 +14,7 @@ void main() {
     else if (pid == 0) {
         printf("Inside Child Process with process ID: %d \n", getpid());
         execlp("/bin/date", "date", NULL);
-        exit(0); // Added missing closing brace }
+        exit(0); 
     }
     else {
         child_pid = wait(&status);
