@@ -1,8 +1,8 @@
-#create table salesman1(salesman_id number(5) primary key, name char(15),city char(5), commission decimal(5,2));
+1.create table salesman1(salesman_id number(5) primary key, name char(15),city char(5), commission decimal(5,2));
 
-#create table orders1(ord_no number(5),purch_amt number(4), ord_date date,cust_id number(5),salesman_id number(5),foreign key(salesman_id) references salesman1(salesman_id));
+2.create table orders1(ord_no number(5),purch_amt number(4), ord_date date,cust_id number(5),salesman_id number(5),foreign key(salesman_id) references salesman1(salesman_id));
 
-#create table customer1(cust_id number(5),cust_name char(15), city char(5),grade char(1),salesman_id number(5),foreign key(salesman_id) references salesman1(salesman_id));
+3.create table customer1(cust_id number(5),cust_name char(15), city char(5),grade char(1),salesman_id number(5),foreign key(salesman_id) references salesman1(salesman_id));
 
 #insert into salesman1 values(&salesman_id,'&name','&city',&commission);
 %SQL> @test.sql
@@ -39,3 +39,65 @@ old   1: insert into customer1 values(&cust_id, '&cust_name', '&city','&grade',&
 new   1: insert into customer1 values(123, 'fgh', 'kochi','a',1)
 
 1 row created.
+
+#/*select salesman_id, name, commission from salesman1;
+select ord_date,ord_no,salesman_id,purch_amt from orders1;
+select distinct salesman_id from orders1;
+select name from salesman1 where city='kochi';
+Select * from customer1 where grade='a';
+select ord_no,ord_date,purch_amt from orders1 where salesman_id=1; 
+
+create table nobel_win1(year number(4),subject char(3),winner char(10),country char(3),cat char(3));
+
+insert into nobel_win values(&year,'&subject','&winner','&country','&cat'); 
+select year,subject,winner from nobel_win where year=1970; 
+
+select winner from nobel_win where year=1970 and subject='lit'; 
+
+select year, subject from nobel_win where winner='a';
+
+select winner from nobel_win where subject='phy' and year>=1930;
+
+select year,subject,winner,country from nobel_win where year>=1965 and year<=1975;
+select * from nobel_win where winner like 'a%';
+SQL> @test.sql
+
+      YEAR SUBJECT    WINNER	      COU CATE
+---------- ---------- --------------- --- ----
+      1930 phy	      a 	      us  sci
+
+(select * from nobel_win where (subject='phy' and year=1930)) Union (select * from nobel_win where (subject='chem' and year=1940));
+SQL> @test.sql
+
+      YEAR SUBJECT    WINNER	      COU CATE
+---------- ---------- --------------- --- ----
+      1930 phy	      a 	      us  sci
+      1940 chem       b 	      rus sci
+select * from nobel_win where year=1970 and subject not in('phys' ,'eco');
+SQL> @test.sql
+
+      YEAR SUBJECT    WINNER	      COU CATE
+---------- ---------- --------------- --- ----
+      1970 lit	      s 	      ind wrt
+
+select * from nobel_win where subject not like 'p%' order by year;
+SQL> @test.sql
+
+      YEAR SUBJECT    WINNER	      COU CATE
+---------- ---------- --------------- --- ----
+      1940 chem       b 	      rus sci
+      1970 lit	      s 	      ind wrt
+      1980 ecn	      c 	      uk  ecn
+
+create table products(p_id number(1),p_price number(4),p_name char(5));
+insert into products values(&p_id,&p_price,'&p_name');
+select min(p_price ) as Minimum_Price from products;
+select max(p_price ) as Maximum_Price from products;
+select count(p_id) as Total_no_of_products from products;
+select sum(p_price) as Total_Amount from products;
+select avg(p_price) as average_price from products;
+
+
+
+
+
