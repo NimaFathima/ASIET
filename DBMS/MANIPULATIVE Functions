@@ -27,3 +27,25 @@ select trim('         Android' )from dual;
 
 select replace ('Data management','Data','Database') from dual;
 */
+case manipulative functions (LOWER,UPPER,INITCAP)
+select LOWER ('ASIET IS FOR TECH GEEKS ONLY') from dual;
+select UPPER ('asiet is only for geeks')from dual;
+select INITCAP('Ai is a sub-branch of cse') from dual;
+character manipulatve functions (Concat , length ,substr , instr , lpad , rpad , trim , replace ).
+select concat ('CSE','-AI') from dual;
+select concat(NULL,'CSE') from dual;
+select LENGTH('Learning is always fun') from dual;
+select length ('    Database') from dual;
+select substr ('Database Management System') from dual;
+select substr ('Database Management System',9,7) from dual;
+select instr ('Google apps are the great application','app') from dual;
+select instr ('Google apps are the great application','app',1,2) from dual;
+select lpad('100',5,'*')from dual;
+select rpad('100',5,'*')from dual;
+select lpad('hello',21,'asiet') from dual;
+select rpad('earn',19,'respect') from dual;
+select trim ('A' from 'Android') from dual;
+select trim('    Android') from dual;
+select replace ('Data management','Data','Database') from dual;
+//ddl and dml queries in next lab [insert,create,constraints,insert atleat 7 rows
+// right top roll and name every assign as file ,file name is roll no.
