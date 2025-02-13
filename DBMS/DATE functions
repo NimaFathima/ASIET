@@ -1,0 +1,9 @@
+DATE FUNCTIONS:
+SELECT SYSDATE FROM DUAL;
+
+SELECT NEXT_DAY(SYSDATE,'WED') FROM DUAL;
+SELECT add_months(SYSDATE,2) FROM DUAL;
+SELECT months_between(SYSDATE,hiredate) FROM DUAL;
+select least ('10-jan-2008','12-oct-2006') from dual;
+
+select greatest ('10-jan-2008','12-oct-2006') from dual;
