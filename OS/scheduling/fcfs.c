@@ -1,130 +1,92 @@
 #include <stdio.h>
-#include <string.h>
 
-#define MAX_PROCESSES 100
-
-// Define arrays for each attribute
-int pid[MAX_PROCESSES], at[MAX_PROCESSES], bt[MAX_PROCESSES], ct[MAX_PROCESSES], tt[MAX_PROCESSES], wt[MAX_PROCESSES];
-char pname[MAX_PROCESSES][10];
-
-void getprocess(int n) {
-    for (int i = 0; i < n; i++) {
-        printf("Enter the %d Process PID: ", i + 1);
-        scanf("%d", &pid[i]);
-        printf("Enter the %d Process Name: ", i + 1);
-        scanf("%s", pname[i]);
-        printf("Enter the %d Process Arrival time: ", i + 1);
-        scanf("%d", &at[i]);
-        printf("Enter the %d Process Burst time: ", i + 1);
-        scanf("%d", &bt[i]);
-        ct[i] = 0; // Initialize completion time to zero
-    }
-}
-
-void tt(int n) {
-    // Calculate turnaround time: TT = CT - AT
-    for (int i = 0; i < n; i++) {
-        tt[i] = ct[i] - at[i];
-    }
-}
-
-void wt(int n) {
-    // Calculate waiting time: WT = TT - BT
-    for (int i = 0; i < n; i++) {
-        wt[i] = tt[i] - bt[i];
-    }
-}
-
-void print(int n) {
-    // Print the details of each process
-    printf("\nPID\tName\tAT\tBT\tCT\tTT\tWT\n");
-    for (int i = 0; i < n; i++) {
-        printf("%d\t%s\t%d\t%d\t%d\t%d\t%d\n", pid[i], pname[i], at[i], bt[i], ct[i], tt[i], wt[i]);
-    }
-}
-
-void gantt(int n) {
-    int t = 0; // Time tracker for Gantt chart
-
-    // Print the Gantt chart
-    printf("\nGantt Chart:\n");
-    for (int i = 0; i < n; i++) {
-        if (t < at[i]) {
-            printf("| IDLE ");
-            t = at[i];
-        }
-        printf("| %s ", pname[i]);
-        t += bt[i];
-        ct[i] = t;  // Set the completion time for the current process
-    }
-    printf("|\n");
-
-    // Print the process completion times directly below the Gantt chart
-    printf("     ");
-    for (int i = 0; i < n; i++) {
-        printf("  %d  ", ct[i]);
-    }
-    printf("\n");
-}
-
-void sort(int n) {
-    int temp_pid, temp_at, temp_bt;
-    char temp_pname[10];
-
-    // Sorting processes based on arrival time (AT)
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = i + 1; j < n; j++) {
-            if (at[i] > at[j]) {
-                // Swap arrival times
-                temp_at = at[i];
-                at[i] = at[j];
-                at[j] = temp_at;
-
-                // Swap burst times
-                temp_bt = bt[i];
-                bt[i] = bt[j];
-                bt[j] = temp_bt;
-
-                // Swap process IDs
-                temp_pid = pid[i];
-                pid[i] = pid[j];
-                pid[j] = temp_pid;
-
-                // Swap process names
-                strcpy(temp_pname, pname[i]);
-                strcpy(pname[i], pname[j]);
-                strcpy(pname[j], temp_pname);
-            }
-        }
-    }
-}
-
-void complete(int n) {
-    int t = 0; // Initial time
-
-    // Calculate the completion times for the processes
-    for (int i = 0; i < n; i++) {
-        if (t < at[i]) {
-            t = at[i];  // If CPU is idle, jump to the next process arrival time
-        }
-        t += bt[i]; // Process burst time
-        ct[i] = t;  // Store the completion time for the current process
-    }
-}
-
-int main() {
+void main() {
     int n;
-
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
-    getprocess(n);
-    sort(n);
-    complete(n);
-    tt(n);
-    wt(n);
-    print(n);
-    gantt(n);
+    int pid[100], at[100], bt[100], ct[100], tt[100], wt[100];
+    int i, j, temp;
+    float avg_wt = 0, avg_tt = 0;
 
-    return 0;
+    // Input for processes, burst times, and arrival times
+    for (i = 0; i < n; i++) {
+        printf("Enter the Process PID: ");
+        scanf("%d", &pid[i]);
+        printf("Enter the Process Arrival Time: ");
+        scanf("%d", &at[i]);
+        printf("Enter the Process Burst time: ");
+        scanf("%d", &bt[i]); 
+    }
+
+    // Sorting processes based on arrival time (ascending order)
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - 1 - i; j++) {
+            if (at[j] > at[j + 1]) {
+                // Swap Arrival Time
+                temp = at[j];
+                at[j] = at[j + 1];
+                at[j + 1] = temp;
+
+                // Swap Burst Time
+                temp = bt[j];
+                bt[j] = bt[j + 1];
+                bt[j + 1] = temp;
+
+                // Swap PID
+                temp = pid[j];
+                pid[j] = pid[j + 1];
+                pid[j + 1] = temp;
+            }
+        }
+    }
+
+    // FCFS Scheduling: Calculate Completion Time, Turnaround Time, and Waiting Time
+    ct[0] = at[0] + bt[0]; // Completion time for the first process
+    for (i = 1; i < n; i++) {
+        ct[i] = ct[i - 1] + bt[i]; // Completion time of subsequent processes
+    }
+
+    // Calculate Turnaround Time and Waiting Time
+    for (i = 0; i < n; i++) {
+        tt[i] = ct[i] - at[i]; // Turnaround Time = Completion Time - Arrival Time
+        wt[i] = tt[i] - bt[i]; // Waiting Time = Turnaround Time - Burst Time
+    }
+
+    // Calculate average waiting time and turnaround time
+    for (i = 0; i < n; i++) {
+        avg_wt += wt[i];
+        avg_tt += tt[i];
+    }
+
+    avg_wt /= n;
+    avg_tt /= n;
+
+    // Output results
+    printf("\nPROCESS TABLE\n");
+    printf("------------------------------------------------------------\n");
+    printf("| PID | Arrival Time | Burst Time | Completion Time | Turnaround Time | Waiting Time |\n");
+    printf("------------------------------------------------------------\n");
+    for (i = 0; i < n; i++) {
+        printf("| %d   | %d            | %d          | %d              | %d               | %d            |\n",
+                pid[i], at[i], bt[i], ct[i], tt[i], wt[i]);
+    }
+    printf("------------------------------------------------------------\n");
+
+    // Output the averages
+    printf("\nAVERAGE WAITING TIME: %.2f\n", avg_wt);
+    printf("AVERAGE TURNAROUND TIME: %.2f\n", avg_tt);
+
+    // Print Gantt Chart
+    printf("\nGANTT CHART\n");
+    printf("____________________________________________________________________________________ \n");
+    for (i = 0; i < n; i++) {
+        printf("|  %d  ", pid[i]);
+    }
+    printf("|\n");
+    printf("____________________________________________________________________________________ \n");
+    for (i = 0; i < n; i++) {
+        printf("%d        ", ct[i]);
+    }
+    printf("\n");
 }
