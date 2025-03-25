@@ -1,5 +1,3 @@
-FCFS
-
 #include <stdio.h>
 
 void main() {
