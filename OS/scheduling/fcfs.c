@@ -1,3 +1,5 @@
+FCFS
+
 #include <stdio.h>
 
 void main() {
@@ -5,7 +7,7 @@ void main() {
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
-    int pid[100], at[100], bt[100], ct[100], tt[100], wt[100];
+    int pid[100], at[100], bt[100], ct[100], tt[100], wt[100], st[100];
     int i, j, temp;
     float avg_wt = 0, avg_tt = 0;
 
@@ -41,10 +43,12 @@ void main() {
         }
     }
 
-    // FCFS Scheduling: Calculate Completion Time, Turnaround Time, and Waiting Time
-    ct[0] = at[0] + bt[0]; // Completion time for the first process
+    // FCFS Scheduling: Calculate Start Time, Completion Time, Turnaround Time, and Waiting Time
+    st[0] = at[0];  // Start time of the first process
+    ct[0] = st[0] + bt[0]; // Completion time for the first process
     for (i = 1; i < n; i++) {
-        ct[i] = ct[i - 1] + bt[i]; // Completion time of subsequent processes
+        st[i] = (ct[i - 1] > at[i]) ? ct[i - 1] : at[i]; // Start time of subsequent processes
+        ct[i] = st[i] + bt[i]; // Completion time of each process
     }
 
     // Calculate Turnaround Time and Waiting Time
@@ -64,29 +68,49 @@ void main() {
 
     // Output results
     printf("\nPROCESS TABLE\n");
-    printf("------------------------------------------------------------\n");
+    printf("----------------------------------------------------------------------------------------------\n");
     printf("| PID | Arrival Time | Burst Time | Completion Time | Turnaround Time | Waiting Time |\n");
-    printf("------------------------------------------------------------\n");
+    printf("----------------------------------------------------------------------------------------------\n");
     for (i = 0; i < n; i++) {
-        printf("| %d   | %d            | %d          | %d              | %d               | %d            |\n",
+        printf("| %3d | %12d | %10d | %14d | %15d | %12d |\n",
                 pid[i], at[i], bt[i], ct[i], tt[i], wt[i]);
     }
-    printf("------------------------------------------------------------\n");
+    printf("----------------------------------------------------------------------------------------------\n");
 
     // Output the averages
     printf("\nAVERAGE WAITING TIME: %.2f\n", avg_wt);
     printf("AVERAGE TURNAROUND TIME: %.2f\n", avg_tt);
 
     // Print Gantt Chart
-    printf("\nGANTT CHART\n");
-    printf("____________________________________________________________________________________ \n");
+    printf("\nGANTT CHART\n ");
+    
+    // Top line
     for (i = 0; i < n; i++) {
-        printf("|  %d  ", pid[i]);
+        for (int k = 0; k < bt[i]; k++) printf("--");
+        printf(" ");
     }
-    printf("|\n");
-    printf("____________________________________________________________________________________ \n");
+    printf("\n|");
+    
+    // Process names
     for (i = 0; i < n; i++) {
-        printf("%d        ", ct[i]);
+        for (int k = 0; k < bt[i] - 1; k++) printf(" ");
+        printf("P%d", pid[i]);
+        for (int k = 0; k < bt[i] - 1; k++) printf(" ");
+        printf("|");
+    }
+    printf("\n ");
+    
+    // Bottom line
+    for (i = 0; i < n; i++) {
+        for (int k = 0; k < bt[i]; k++) printf("--");
+        printf(" ");
+    }
+    printf("\n0");
+
+    // Time values
+    for (i = 0; i < n; i++) {
+        for (int k = 0; k < bt[i]; k++) printf("  ");
+        printf("%d", ct[i]);
     }
     printf("\n");
 }
