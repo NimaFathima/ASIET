@@ -5,7 +5,7 @@ void main() {
     printf("Enter the number of processes: ");
     scanf("%d", &n);
 
-    int pid[100], at[100], bt[100], ct[100], tt[100], wt[100], st[100];
+    int pid[100], at[100], bt[100], ct[100], tt[100], wt[100];
     int i, j, temp;
     float avg_wt = 0, avg_tt = 0;
 
@@ -15,7 +15,7 @@ void main() {
         scanf("%d", &pid[i]);
         printf("Enter the Process Arrival Time: ");
         scanf("%d", &at[i]);
-        printf("Enter the Process Burst time: ");
+        printf("Enter the Process Burst Time: ");
         scanf("%d", &bt[i]); 
     }
 
@@ -41,12 +41,20 @@ void main() {
         }
     }
 
-    // FCFS Scheduling: Calculate Start Time, Completion Time, Turnaround Time, and Waiting Time
-    st[0] = at[0];  // Start time of the first process
-    ct[0] = st[0] + bt[0]; // Completion time for the first process
+    // FCFS Scheduling: Calculate Completion Time, Turnaround Time, and Waiting Time
+    if (at[0] > 0) {
+        ct[0] = at[0] + bt[0]; // Handle idle time if first process arrives after time 0
+    } else {
+        ct[0] = bt[0]; // Normal case when the first process starts at time 0
+    }
     for (i = 1; i < n; i++) {
-        st[i] = (ct[i - 1] > at[i]) ? ct[i - 1] : at[i]; // Start time of subsequent processes
-        ct[i] = st[i] + bt[i]; // Completion time of each process
+        if (ct[i - 1] < at[i]) {
+            // If the CPU is idle before the next process arrives
+            ct[i] = at[i] + bt[i];
+        } else {
+            // Normal case where the next process starts immediately after the previous one
+            ct[i] = ct[i - 1] + bt[i];
+        }
     }
 
     // Calculate Turnaround Time and Waiting Time
@@ -66,49 +74,48 @@ void main() {
 
     // Output results
     printf("\nPROCESS TABLE\n");
-    printf("----------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------\n");
     printf("| PID | Arrival Time | Burst Time | Completion Time | Turnaround Time | Waiting Time |\n");
-    printf("----------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------\n");
     for (i = 0; i < n; i++) {
-        printf("| %3d | %12d | %10d | %14d | %15d | %12d |\n",
+        printf("| %d   | %d            | %d          | %d              | %d               | %d            |\n",
                 pid[i], at[i], bt[i], ct[i], tt[i], wt[i]);
     }
-    printf("----------------------------------------------------------------------------------------------\n");
+    printf("------------------------------------------------------------------------\n");
 
     // Output the averages
     printf("\nAVERAGE WAITING TIME: %.2f\n", avg_wt);
     printf("AVERAGE TURNAROUND TIME: %.2f\n", avg_tt);
 
     // Print Gantt Chart
-    printf("\nGANTT CHART\n ");
-    
-    // Top line
-    for (i = 0; i < n; i++) {
-        for (int k = 0; k < bt[i]; k++) printf("--");
-        printf(" ");
-    }
-    printf("\n|");
-    
-    // Process names
-    for (i = 0; i < n; i++) {
-        for (int k = 0; k < bt[i] - 1; k++) printf(" ");
-        printf("P%d", pid[i]);
-        for (int k = 0; k < bt[i] - 1; k++) printf(" ");
-        printf("|");
-    }
-    printf("\n ");
-    
-    // Bottom line
-    for (i = 0; i < n; i++) {
-        for (int k = 0; k < bt[i]; k++) printf("--");
-        printf(" ");
-    }
-    printf("\n0");
+    printf("\n\t\t\t\tGANTT CHART\n");
+    printf("---------------------------------------------------------------------------------------------------------------\n");
 
-    // Time values
+    // Print process IDs in the Gantt chart
+    printf("||");
     for (i = 0; i < n; i++) {
-        for (int k = 0; k < bt[i]; k++) printf("  ");
-        printf("%d", ct[i]);
+        if (i > 0 && ct[i - 1] < at[i]) {
+            // Idle period in the Gantt chart
+            printf("\tIDLE\t||");
+        }
+        printf("\tp%d\t||", pid[i]); // Print process IDs separated by ||
     }
     printf("\n");
+    printf("---------------------------------------------------------------------------------------------------------------\n");
+
+    // Calculate and print completion times below the || symbols
+    int startTime = (at[0] > 0) ? at[0] : 0; // Adjust start time if the first process arrives after 0
+    printf("  %d\t", startTime); // Print initial start time
+    for (i = 0; i < n; i++) {
+        if (i > 0 && ct[i - 1] < at[i]) {
+            // Idle period in the Gantt chart
+            startTime = at[i];
+            printf("  %d\t", startTime);
+        }
+        int endTime = startTime + bt[i]; // Calculate end time (completion time)
+        printf("  %d\t", endTime); // Print completion time without || separators
+        startTime = endTime; // Update start time for the next process
+    }
+    printf("\n");
+    printf("---------------------------------------------------------------------------------------------------------------\n");
 }
