@@ -1,0 +1,185 @@
+#include <stdio.h>
+void main() {
+    int n, i, j, time_quantum;
+    int job[100], at[100], bt[100], remaining_bt[100], ct[100], tt[100], wt[100];
+    int total_tt = 0, total_wt = 0;
+    float avg_tt = 0, avg_wt = 0;
+    
+    printf("ENTER THE NUMBER OF PROCESSES: ");
+    scanf("%d", &n);
+    
+    for(i = 0; i < n; i++) {
+        printf("%d ENTER THE PROCESSES_ID: ", i+1);
+        scanf("%d", &job[i]);
+        printf("   ENTER THE ARRIVAL TIME: ");
+        scanf("%d", &at[i]);
+        printf("   ENTER THE BURST TIME: ");
+        scanf("%d", &bt[i]);
+        remaining_bt[i] = bt[i];
+    }
+    
+    printf("ENTER TIME QUANTUM: ");
+    scanf("%d", &time_quantum);
+    
+    // Sort processes based on arrival time
+    int temp;
+    for(j = 0; j < n-1; j++) {
+        for(i = 0; i < n-j-1; i++) {
+            if(at[i] > at[i+1]) {
+                // Swap arrival times
+                temp = at[i];
+                at[i] = at[i+1];
+                at[i+1] = temp;
+                
+                // Swap burst times
+                temp = bt[i];
+                bt[i] = bt[i+1];
+                bt[i+1] = temp;
+                
+                // Swap remaining burst times
+                temp = remaining_bt[i];
+                remaining_bt[i] = remaining_bt[i+1];
+                remaining_bt[i+1] = temp;
+                
+                // Swap process IDs
+                temp = job[i];
+                job[i] = job[i+1];
+                job[i+1] = temp;
+            }
+        }
+    }
+    
+    // Prepare arrays for Gantt chart
+    char gantt_job[100]; // Use A, B, C instead of process IDs
+    int gantt_time[100];
+    int gantt_count = 0;
+    
+    int current_time = 0;
+    int completed = 0;
+    int queue[100], front = -1, rear = -1;
+    int is_completed[100] = {0};
+    
+    // Add first process to queue
+    front = rear = 0;
+    queue[rear] = 0;
+    
+    while(completed != n) {
+        int idx = -1;
+        
+        // Get process from queue
+        if(front <= rear) {
+            idx = queue[front];
+            front++;
+        } else {
+            // Queue is empty, find next process to arrive
+            int min_at = 9999;
+            for(i = 0; i < n; i++) {
+                if(remaining_bt[i] > 0 && !is_completed[i]) {
+                    if(at[i] > current_time && at[i] < min_at) {
+                        min_at = at[i];
+                        idx = i;
+                    }
+                }
+            }
+            
+            if(idx == -1) {
+                // If no future processes, find the earliest arrived process
+                for(i = 0; i < n; i++) {
+                    if(remaining_bt[i] > 0 && !is_completed[i]) {
+                        idx = i;
+                        break;
+                    }
+                }
+            }
+            
+            if(current_time < at[idx]) {
+                // Record idle time in Gantt chart
+                gantt_job[gantt_count] = '_';  // '-' represents idle
+                gantt_time[gantt_count] = current_time;
+                gantt_count++;
+                current_time = at[idx];
+            }
+        }
+        
+        if(idx != -1) {
+            // Record in Gantt chart
+            gantt_job[gantt_count] = 'A' + job[idx] - 1;  // Convert to A, B, C...
+            gantt_time[gantt_count] = current_time;
+            gantt_count++;
+            
+            int time_slice = (remaining_bt[idx] < time_quantum) ? remaining_bt[idx] : time_quantum;
+            
+            // Execute for time_slice
+            current_time += time_slice;
+            remaining_bt[idx] -= time_slice;
+            
+            // Check for new arrivals to add to queue
+            for(i = 0; i < n; i++) {
+                if(i != idx && remaining_bt[i] > 0 && at[i] <= current_time && 
+                   at[i] > gantt_time[gantt_count-1] && !is_completed[i]) {
+                    int already_in_queue = 0;
+                    for(j = front; j <= rear; j++) {
+                        if(queue[j] == i) {
+                            already_in_queue = 1;
+                            break;
+                        }
+                    }
+                    if(!already_in_queue) {
+                        rear++;
+                        queue[rear] = i;
+                    }
+                }
+            }
+            
+            // If process completed
+            if(remaining_bt[idx] == 0) {
+                completed++;
+                is_completed[idx] = 1;
+                ct[idx] = current_time;
+                tt[idx] = ct[idx] - at[idx];
+                wt[idx] = tt[idx] - bt[idx];
+            } else {
+                // Add back to queue
+                rear++;
+                queue[rear] = idx;
+            }
+        }
+    }
+    
+    // Add final timestamp to Gantt chart
+    gantt_time[gantt_count] = current_time;
+    
+    // Calculate average turnaround time and waiting time
+    for(i = 0; i < n; i++) {
+        total_tt += tt[i];
+        total_wt += wt[i];
+    }
+    
+    avg_tt = (float)total_tt / n;
+    avg_wt = (float)total_wt / n;
+    
+    // Display results in the expected format
+    printf("\n AVERAGE TURNAROUND TIME: %f", avg_tt);
+    printf("\n AVERAGE WAITING TIME: %f", avg_wt);
+    
+    // Process table
+    printf("\n|   PID |   AT  |   BT  |   CT  |   TT  |   WT  |");
+    for(i = 0; i < n; i++) {
+        printf("\n|   %d  |   %d  |   %d  |   %d  |   %d  |   %d  |", job[i], at[i], bt[i], ct[i], tt[i], wt[i]);
+    }
+    
+    // Display Gantt chart exactly as in the expected output
+    printf("\n\nGantt Chart\n");
+    
+    // Print the process labels
+    for(i = 0; i < gantt_count; i++) {
+        printf("   %c  ", gantt_job[i]);
+    }
+    printf("\n");
+    
+    // Print the time markers
+    for(i = 0; i <= gantt_count; i++) {
+        printf("%-5d", gantt_time[i]);
+    }
+    printf("\n");
+}
