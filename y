@@ -1,4 +1,4 @@
-// UNIQUE & NOT NULL
+// UNIQUE & NOT NULL 
 mysql> create table t3(roll_no int primary key,name varchar(10) unique);
 Query OK, 0 rows affected (0.05 sec)
 
