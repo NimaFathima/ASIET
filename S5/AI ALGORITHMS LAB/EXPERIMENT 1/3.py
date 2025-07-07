@@ -1,0 +1,10 @@
+a=eval(input("Enter the first number: "))
+b=eval(input("Enter the second number: "))
+
+print("RESULT AFTER ADDITION: ",a+b)
+print("RESULT AFTER SUBTRACTION: ",a-b)
+print("RESULT AFTER MULTIPLICATION: ",a*b)
+print("RESULT AFTER DIVISION( float ): ",a/b)
+print("RESULT AFTER FLOOR DIVISION: ",a//b)
+print("RESULT AFTER MODULO: ",a%b)
+print("RESULT AFTER EXPONENTIATION: ",a**b)
