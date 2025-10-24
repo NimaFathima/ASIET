@@ -1,93 +1,59 @@
-def map_coloring():
-    """
-    Solves the map coloring problem using backtracking.
-    User inputs the graph (regions and borders) and the number of colors.
-    """
+# Check if it's safe to color a node with the given color
+def is_safe(node, color, assignment, graph):
+    for neighbor in graph[node]:
+        if neighbor in assignment and assignment[neighbor] == color:
+            return False
+    # Also check reverse neighbors (for directed graphs)
+    for other in graph:
+        if node in graph[other] and assignment[other] == color:
+            return False
+    return True
 
-    def get_undirected_graph():
-        """
-        Builds an undirected graph from user input.
-        If user enters A-B, it automatically adds B-A.
-        """
-        graph = {}
-        print("--- Create Your Map (Undirected Graph) ---")
-        try:
-            nodes_str = input("Enter all region names (space-separated, e.g., WA NT SA): ").split()
-            for node in nodes_str:
-                graph[node] = []  # Initialize each node with an empty neighbor list
-
-            num_edges = int(input("\nEnter the number of borders (edges): "))
-            print("For each border, enter 'region1 region2' (e.g., WA NT)")
-            for _ in range(num_edges):
-                u, v = input(f"Border #{_+1}: ").split()
-                if u in graph and v in graph:
-                    graph[u].append(v)
-                    graph[v].append(u)  # Add edge in both directions for undirected graph
-                else:
-                    print(f"Warning: Region {u} or {v} not defined. Skipping border.")
-        except (ValueError, IndexError):
-            print("Invalid input format. Please try again.")
-            return None
-        print("Graph created successfully.\n")
-        return graph
-
-    def is_safe(node, color, graph, assignment):
-        """
-        Checks if it's safe to assign a color to a node by checking its neighbors.
-        """
-        for neighbor in graph.get(node, []):
-            if assignment.get(neighbor) == color:
-                return False
+# Backtracking function for graph coloring
+def graph_coloring(nodes, graph, m, assignment, index=0):
+    if index == len(nodes):  # All nodes processed
         return True
+    node = nodes[index]
+    for color in range(1, m + 1):
+        if is_safe(node, color, assignment, graph):
+            assignment[node] = color
+            if graph_coloring(nodes, graph, m, assignment, index + 1):
+                return True
+            assignment[node] = 0  # Backtrack
+    return False
 
-    def graph_coloring_solver(nodes, graph, num_colors, assignment, node_index):
-        """
-        Recursive backtracking function to solve the map coloring problem.
-        """
-        # Base case: If all nodes are assigned a color, we are done
-        if node_index == len(nodes):
-            return True
+# Solve the map coloring problem
+def solve_map_coloring(graph, m):
+    nodes = list(graph.keys())
+    assignment = {node: 0 for node in nodes}  # 0 = uncolored
+    if not graph_coloring(nodes, graph, m, assignment):
+        print(f"No solution exists with {m} colors.")
+        return None
+    print("Solution exists: Coloring of vertices is")
+    for node in nodes:
+        print(f"Vertex {node} --> Color {assignment[node]}")
+    return assignment
 
-        current_node = nodes[node_index]
+# Take graph input from user
+def graph():
+    try:
+        num_nodes = int(input("Enter the number of nodes: "))
+        if num_nodes <= 0:
+            print("Number of nodes must be positive.")
+            return None
 
-        # Try assigning each color to the current node
-        for color in range(1, num_colors + 1):
-            if is_safe(current_node, color, graph, assignment):
-                # Assign the color
-                assignment[current_node] = color
+        graph = {}
+        for i in range(num_nodes):
+            node = input(f"Enter name for node #{i+1}: ").strip()
+            neighbors_str = input(f"Enter neighbors for node '{node}' (space-separated): ").strip()
+            graph[node] = neighbors_str.split() if neighbors_str else []
 
-                # Recur for the next node
-                if graph_coloring_solver(nodes, graph, num_colors, assignment, node_index + 1):
-                    return True
+        return graph
+    except ValueError:
+        print("Invalid input. Please enter a valid number of nodes.")
+        return None
 
-                # If recursion didn't lead to a solution, backtrack
-                assignment[current_node] = 0
-
-        return False  # No color could be assigned to this node
-
-    # Main map coloring function logic
-    user_graph = get_undirected_graph()
-
-    if user_graph:
-        try:
-            m = int(input("Enter the number of available colors: "))
-            if m <= 0:
-                print("Number of colors must be positive.")
-            else:
-                node_list = list(user_graph.keys())
-                # Initialize assignment: 0 means no color
-                color_assignment = {node: 0 for node in node_list}
-
-                if graph_coloring_solver(node_list, user_graph, m, color_assignment, 0):
-                    print(f"\nSolution exists with {m} colors!")
-                    print("Coloring of regions is:")
-                    for node, color in sorted(color_assignment.items()):
-                        print(f"  - Region {node} --> Color {color}")
-                else:
-                    print(f"\nNo solution exists with {m} colors.")
-
-        except ValueError:
-            print("Invalid input. Please enter an integer for the number of colors.")
-
-# Run the map coloring function
-map_coloring()
+# Run the program directly
+graph_data = graph()
+m = int(input("Number of colors: "))
+solve_map_coloring(graph_data, m)
