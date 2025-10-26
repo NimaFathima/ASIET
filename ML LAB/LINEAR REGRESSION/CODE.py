@@ -89,8 +89,15 @@ plt.figure(figsize=(10, 6))
 # Plot the actual test data points
 plt.scatter(X_test, y_test, color='blue', label='Actual Test Values', alpha=0.6)
 
-# Plot the smooth regression line
-plt.plot(X_test, y_test_pred, color='red', linewidth=2, label='Regression Line (Prediction)')
+# 1. Create a new, sorted array of X-values
+# We use .values.reshape(-1, 1) to make it a 2D array for the model
+X_fit = np.linspace(X.min(), X.max(), 100).values.reshape(-1, 1)
+
+# 2. Predict the Y-values for this new sorted X-range
+y_fit = model.predict(X_fit)
+
+# 3. Plot the smooth, straight regression line
+plt.plot(X_fit, y_fit, color='red', linewidth=2, label='Regression Line (Prediction)')
 
 # Labels and Title
 plt.title('Linear Regression Fit on Test Data')
