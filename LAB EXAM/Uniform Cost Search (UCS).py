@@ -50,7 +50,7 @@ def ucs_traversal():
                 visited.add(current_node)
 
                 # Explore neighbors
-                for neighbor, edge_cost in graph.get(current_node, []):
+                for neighbor, edge_cost in graph[current_node]:
                     if neighbor not in visited:
                         new_cost = cost + edge_cost
                         new_path = path + [neighbor]
